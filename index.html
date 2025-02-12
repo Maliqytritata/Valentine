@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #fff0f5;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            color: #d81b60;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .gif {
+            width: 300px;
+            height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        button {
+            font-size: 1.2rem;
+            padding: 0.75em 1.5em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #yesBtn {
+            background-color: #4caf50;
+            color: white;
+        }
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+        }
+        #yesBtn:hover, #noBtn:hover {
+            transform: scale(1.05);
+        }
+        #yesBtn:active, #noBtn:active {
+            transform: scale(0.95);
+        }
+        .heart {
+            color: #d81b60;
+            font-size: 8rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">Will you be my Valentine?</h1>
+        <img src="https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif" alt="Cute Valentine's Day animation" class="gif">
+        <div class="buttons">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
+        <div class="heart">❤️</div>
+    </div>
+    <script>
+        const title = document.getElementById('title');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const gif = document.querySelector('.gif');
+        const heart = document.querySelector('.heart');
+        const container = document.querySelector('.container');
+
+        const noTexts = [
+            "No",
+            "Are you sure?",
+            "What if I asked really nicely?",
+            "Pretty please",
+            "But :*(",
+            "please babe",
+            "No :(",
+            "I am going to die",
+            "Yep I'm ded",
+            "ok ur talking to my ghost",
+            "PLEASE"
+        ];
+
+        let noCount = 0;
+
+        yesBtn.addEventListener('click', () => {
+            title.textContent = "You've made me the happiest person alive!";
+            gif.style.display = 'none';
+            yesBtn.style.display = 'none';
+            noBtn.style.display = 'none';
+            heart.style.display = 'block';
+            
+            // Simple confetti effect
+            for (let i = 0; i < 100; i++) {
+                createConfetti();
+            }
+        });
+
+        noBtn.addEventListener('click', () => {
+            noCount++;
+            if (noCount < noTexts.length) {
+                noBtn.textContent = noTexts[noCount];
+            }
+            if (noCount >= noTexts.length - 1) {
+                noBtn.style.backgroundColor = '#9c27b0';
+            }
+            yesBtn.style.fontSize = `${(noCount * 20 + 100)}%`;
+        });
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.backgroundColor = getRandomColor();
+            confetti.style.position = 'absolute';
+            confetti.style.left = `${Math.random() * 100}vw`;
+            confetti.style.top = '-10px';
+            confetti.style.borderRadius = '50%';
+            container.appendChild(confetti);
+
+            const animation = confetti.animate(
+                [
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(100vh) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ],
+                {
+                    duration: Math.random() * 3000 + 2000,
+                    easing: 'cubic-bezier(0,0,0.2,1)'
+                }
+            );
+
+            animation.onfinish = () => confetti.remove();
+        }
+
+        function getRandomColor() {
+            return `hsl(${Math.random() * 360}, 100%, 50%)`;
+        }
+    </script>
+</body>
+</html>
+
